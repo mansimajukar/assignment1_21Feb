@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Recycle Bin</h2>
+
+<table>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Balance</th>
+<th>Restore</th>
+</tr>
+
+{% for acc in accounts %}
+<tr>
+<td>{{ acc.id }}</td>
+<td>{{ acc.name }}</td>
+<td>₹ {{ acc.balance }}</td>
+<td>
+<form method="POST" action="/restore/{{ acc.id }}">
+<button style="background:green;">♻ Restore</button>
+</form>
+</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

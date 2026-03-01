@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📊 Dashboard</h2>
+
+<div class="cards">
+<div class="card">
+<h3>Total Accounts</h3>
+<b>{{ accounts|length }}</b>
+</div>
+
+<div class="card">
+<h3>Total Balance</h3>
+<b>₹ {{ total_balance }}</b>
+</div>
+</div>
+
+<h3>Add Account</h3>
+<form method="POST" action="/add">
+<input name="acc" placeholder="Account Number" required>
+<input name="name" placeholder="Customer Name" required>
+<button>Add</button>
+</form>
+
+<h3>Transfer Money</h3>
+<form method="POST" action="/transfer">
+<input name="from" placeholder="From ID" required>
+<input name="to" placeholder="To ID" required>
+<input name="amount" placeholder="Amount" required>
+<button>Transfer</button>
+</form>
+
+<h3>Accounts</h3>
+
+<input type="text" id="search" placeholder="Search Name..." onkeyup="searchTable()">
+
+<table id="accountTable">
+<tr>
+<th>ID</th>
+<th>Acc No</th>
+<th>Name</th>
+<th>Balance</th>
+<th>Actions</th>
+</tr>
+
+{% for acc in accounts %}
+<tr>
+<td>{{ acc.id }}</td>
+<td>{{ acc.acc_number }}</td>
+<td>{{ acc.name }}</td>
+<td>₹ {{ acc.balance }}</td>
+<td>
+
+<form style="display:inline;" method="POST" action="/deposit/{{ acc.id }}">
+<input type="number" step="0.01" name="amount" placeholder="Amt" required>
+<button>+</button>
+</form>
+
+<form style="display:inline;" method="POST" action="/withdraw/{{ acc.id }}">
+<input type="number" step="0.01" name="amount" placeholder="Amt" required>
+<button>-</button>
+</form>
+
+<a href="/edit/{{ acc.id }}">✏</a>
+<a href="/delete/{{ acc.id }}">❌</a>
+<a href="/transactions/{{ acc.id }}">📄</a>
+
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Balance Chart</h3>
+<canvas id="myChart"></canvas>
+
+<canvas id="myChart"></canvas>
+
+<script>
+const labels = JSON.parse('{{ labels_json | safe }}');
+const balances = JSON.parse('{{ balances_json | safe }}');
+
+if (labels.length > 0) {
+    new Chart(document.getElementById('myChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Balance Overview',
+                data: balances,
+                backgroundColor: 'rgba(56,189,248,0.7)'
+            }]
+        }
+    });
+}
+</script>
+{% endblock %}

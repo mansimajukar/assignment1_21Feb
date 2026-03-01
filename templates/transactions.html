@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Transaction History</h2>
+
+<table>
+<tr>
+<th>Type</th>
+<th>Amount</th>
+<th>Date</th>
+</tr>
+
+{% for t in data %}
+<tr>
+<td>{{ t.type }}</td>
+<td>₹ {{ t.amount }}</td>
+<td>{{ t.date }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Real Bank</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="sidebar">
+<h2>💳 MR Bank</h2>
+
+<a href="/dashboard" class="active">📊 Dashboard</a>
+<a href="#">👤 Accounts</a>
+<a href="#">💰 Deposit</a>
+<a href="#">💸 Withdraw</a>
+<a href="#">📈 Reports</a>
+<a href="#">⚙ Settings</a>
+<a href="/logout">🚪 Logout</a>
+</div>
+
+<div class="main">
+{% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
